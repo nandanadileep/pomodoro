@@ -689,8 +689,8 @@ function shareOnTwitter() {
 
     const tweet = messages[Math.floor(Math.random() * messages.length)];
 
-    // Use the GitHub Pages URL
-    const appUrl = 'https://nandanadileep.github.io/pomodoro/';
+    // Use the custom domain
+    const appUrl = 'https://pomodoro.nandanadileep.com';
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}&url=${encodeURIComponent(appUrl)}`;
 
     window.open(twitterUrl, '_blank', 'width=550,height=420');
