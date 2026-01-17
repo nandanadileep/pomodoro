@@ -1339,8 +1339,9 @@ kbd {
     .timer-wrapper {
         width: 260px;
         height: 260px;
-        margin-bottom: 2.5rem;
-        /* Extra space to prevent overlap */
+        margin: 0 auto 2.5rem auto;
+        /* Center horizontally with extra bottom spacing */
+        display: block;
     }
 
     .timer-display {
