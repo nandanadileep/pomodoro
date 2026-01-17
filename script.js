@@ -688,10 +688,12 @@ function shareOnTwitter() {
     ];
 
     const tweet = messages[Math.floor(Math.random() * messages.length)];
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(tweet);
 
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    // Use the GitHub Pages URL
+    const appUrl = 'https://nandanadileep.github.io/pomodoro/';
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}&url=${encodeURIComponent(appUrl)}`;
+
+    window.open(twitterUrl, '_blank', 'width=550,height=420');
 }
 
 // ==================== TIPS SYSTEM ====================
