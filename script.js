@@ -681,9 +681,9 @@ function playBeep() {
 // ==================== TWITTER/X SHARE ====================
 function shareOnTwitter() {
     const messages = [
-        `Just crushed ${AppState.stats.sessionsToday} Pomodoro sessions today! 🌸 On a ${AppState.stats.currentStreak}-day streak! #JapanesePomo #GenZProductivity #FocusMode`,
+        `Just crushed ${AppState.stats.sessionsToday} Pomodoro sessions today! 🌸 On a ${AppState.stats.currentStreak}-day streak! #JapanesePomo #FocusMode`,
         `${AppState.stats.totalMinutes} minutes of pure focus today! 🔥 Built different fr fr #JapanesePomo #ProductivityVibes`,
-        `${AppState.stats.currentStreak} day streak and counting! 💪 Grinding with my kawaii Pomodoro timer #JapanesePomo #GenZ`,
+        `${AppState.stats.currentStreak} day streak and counting! 💪 Grinding with my kawaii Pomodoro timer #JapanesePomo`,
         `Locked in with Japanese Pomo! ${AppState.stats.sessionsToday} sessions done! ⚡ No cap this app hits different #Productivity`
     ];
 
