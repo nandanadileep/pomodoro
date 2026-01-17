@@ -385,11 +385,15 @@ function tick() {
 }
 
 function completeTimer() {
+    console.log('⏰ TIMER COMPLETE!');
+
     // Stop timer
     pauseTimer();
 
-    // Play beep sound
+    // Play beep sound - with explicit call
+    console.log('🔊 About to play beep...');
     playBeep();
+    console.log('🔊 Beep function called');
 
     if (AppState.mode === 'focus') {
         // Focus session completed!
