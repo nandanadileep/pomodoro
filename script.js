@@ -216,16 +216,34 @@ function setupCrossTabSync() {
 
             if (data.isRunning) {
                 document.body.classList.add('timer-active');
+                // Make sure we're ticking too
+                if (!AppState.intervalId) {
+                    AppState.intervalId = setInterval(tick, 1000);
+                }
             } else {
                 document.body.classList.remove('timer-active');
+                if (AppState.intervalId && !data.isRunning) {
+                    clearInterval(AppState.intervalId);
+                    AppState.intervalId = null;
+                }
             }
         } else if (type === 'STATE_UPDATE') {
             // Full state sync
             AppState.stats = data.stats;
             updateStatsDisplay();
             renderBadges();
+        } else if (type === 'STATE_REQUEST') {
+            // Another tab is requesting current state
+            if (AppState.isRunning) {
+                broadcastTimerState();
+            }
         }
     });
+
+    // Request current state from other tabs on load
+    setTimeout(() => {
+        syncChannel.postMessage({ type: 'STATE_REQUEST' });
+    }, 100);
 }
 
 function broadcastTimerState() {
