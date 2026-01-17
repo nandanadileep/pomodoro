@@ -1301,7 +1301,8 @@ kbd {
     }
 
     .container {
-        padding: var(--space-sm);
+        padding: 0.75rem;
+        max-width: 100%;
     }
 
     .theme-toggle {
@@ -1313,6 +1314,7 @@ kbd {
 
     .logo {
         font-size: 1.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .streak-count {
@@ -1324,8 +1326,9 @@ kbd {
     }
 
     .timer-card {
-        padding: var(--space-md);
-        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-md);
     }
 
     .mode-badge {
@@ -1372,10 +1375,11 @@ kbd {
     }
 
     .session-stats {
-        padding: var(--space-md);
+        padding: 1rem 0.75rem;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-md);
+        gap: 1rem;
+        border-radius: var(--radius-md);
     }
 
     .stat-item {
@@ -1401,8 +1405,9 @@ kbd {
     }
 
     .panel-section {
-        padding: var(--space-md);
+        padding: 1rem;
         border-radius: var(--radius-md);
+        margin-bottom: var(--space-md);
     }
 
     .section-title {
