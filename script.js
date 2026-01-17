@@ -421,8 +421,8 @@ function updateDocumentTitle() {
     const minutes = Math.floor(AppState.timeLeft / 60);
     const seconds = AppState.timeLeft % 60;
     const time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    const mode = AppState.mode === 'focus' ? '⚡ Focus' : '☕ Break';
-    document.title = `${time} • ${mode} • Japanese Pomo`;
+    const modeIcon = AppState.mode === 'focus' ? '🍅' : '☕';
+    document.title = `${modeIcon} ${time} | Japanese Pomo`;
 }
 
 // ==================== BADGES SYSTEM ====================
