@@ -1337,20 +1337,29 @@ kbd {
     }
 
     .timer-wrapper {
-        width: 260px;
-        height: 260px;
-        margin: 0 auto 2.5rem auto;
-        /* Center horizontally with extra bottom spacing */
+        width: auto;
+        height: auto;
+        margin: 0 auto 2rem auto;
         display: block;
     }
 
+    /* Hide the circle/ring on mobile */
+    .timer-ring {
+        display: none;
+    }
+
     .timer-display {
-        font-size: 3rem;
+        font-size: 4rem;
+        position: static;
+        transform: none;
+        margin-bottom: 0.5rem;
     }
 
     .timer-label {
-        font-size: 0.75rem;
-        bottom: 30%;
+        position: static;
+        transform: none;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
     }
 
     .controls {
