@@ -1163,10 +1163,13 @@ kbd {
     border-radius: 50%;
 }
 
-/* ==================== RESPONSIVE ==================== */
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Tablet & Smaller Desktops (max-width: 1024px) */
 @media (max-width: 1024px) {
     .main-content {
         grid-template-columns: 1fr;
+        gap: var(--space-md);
     }
 
     .side-panel {
@@ -1174,23 +1177,48 @@ kbd {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: var(--space-md);
     }
-}
 
-@media (max-width: 768px) {
-    .container {
-        padding: var(--space-md);
+    .timer-wrapper {
+        width: 280px;
+        height: 280px;
     }
 
-    .theme-toggle {
-        top: 1rem;
-        right: 1rem;
-        width: 48px;
-        height: 48px;
+    .timer-display {
+        font-size: 3.5rem;
+    }
+}
+
+/* Tablet Portrait (max-width: 768px) */
+@media (max-width: 768px) {
+    :root {
+        --space-xs: 0.4rem;
+        --space-sm: 0.75rem;
+        --space-md: 1.25rem;
+        --space-lg: 1.5rem;
+        --space-xl: 2rem;
+    }
+
+    .container {
+        padding: var(--space-md);
     }
 
     .header-content {
         flex-direction: column;
         text-align: center;
+        gap: var(--space-sm);
+    }
+
+    .logo {
+        font-size: 2rem;
+        justify-content: center;
+    }
+
+    .streak-display {
+        justify-content: center;
+    }
+
+    .timer-card {
+        padding: var(--space-lg);
     }
 
     .timer-wrapper {
@@ -1203,40 +1231,319 @@ kbd {
     }
 
     .controls {
-        flex-direction: column;
+        flex-wrap: wrap;
     }
 
     .control-btn {
         max-width: none;
+        min-width: 120px;
+        font-size: 0.85rem;
+        padding: var(--space-sm) var(--space-md);
     }
 
-    .badges-grid {
-        grid-template-columns: 1fr;
+    .session-stats {
+        padding: var(--space-md);
+        gap: var(--space-sm);
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-icon {
+        font-size: 1.5rem;
     }
 
     .side-panel {
         grid-template-columns: 1fr;
     }
+
+    .badges-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-xs);
+    }
+
+    .badge-item {
+        padding: var(--space-xs);
+    }
+
+    .badge-emoji {
+        font-size: 1.75rem;
+    }
+
+    .badge-name {
+        font-size: 0.7rem;
+    }
+
+    .badge-desc {
+        font-size: 0.65rem;
+    }
+
+    .setting-slider {
+        margin-top: var(--space-xs);
+    }
 }
 
+/* Mobile (max-width: 480px) */
 @media (max-width: 480px) {
+    :root {
+        --space-xs: 0.35rem;
+        --space-sm: 0.6rem;
+        --space-md: 1rem;
+        --space-lg: 1.25rem;
+        --space-xl: 1.5rem;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: var(--space-sm);
+    }
+
+    .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .streak-count {
+        font-size: 1.5rem;
+    }
+
+    .streak-label {
+        font-size: 0.65rem;
+    }
+
+    .timer-card {
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+    }
+
+    .mode-badge {
+        font-size: 0.85rem;
+        padding: var(--space-xs) var(--space-sm);
+    }
+
     .timer-wrapper {
-        width: 220px;
-        height: 220px;
+        width: 240px;
+        height: 240px;
+        margin-bottom: var(--space-md);
     }
 
     .timer-display {
         font-size: 2.5rem;
     }
 
+    .timer-label {
+        font-size: 0.75rem;
+        bottom: 30%;
+    }
+
+    .controls {
+        gap: var(--space-xs);
+    }
+
+    .control-btn {
+        flex: 1;
+        min-width: 90px;
+        max-width: 110px;
+        padding: var(--space-sm);
+        font-size: 0.75rem;
+        border-radius: var(--radius-sm);
+    }
+
+    .btn-icon {
+        font-size: 1rem;
+    }
+
     .session-stats {
-        flex-direction: column;
-        gap: var(--space-md);
+        padding: var(--space-sm);
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+    }
+
+    .stat-item {
+        flex: 1;
+        min-width: 70px;
     }
 
     .stat-divider {
-        width: 60%;
-        height: 2px;
+        display: none;
+    }
+
+    .stat-icon {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+
+    .panel-section {
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+    }
+
+    .section-title {
+        font-size: 1rem;
+        margin-bottom: var(--space-sm);
+    }
+
+    .title-icon {
+        font-size: 1.25rem;
+    }
+
+    .badges-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xs);
+    }
+
+    .badge-item {
+        padding: var(--space-xs);
+        border-radius: var(--radius-sm);
+    }
+
+    .badge-emoji {
+        font-size: 1.5rem;
+    }
+
+    .badge-name {
+        font-size: 0.65rem;
+    }
+
+    .badge-desc {
+        font-size: 0.6rem;
+    }
+
+    .share-btn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.85rem;
+    }
+
+    .share-icon {
+        font-size: 1.25rem;
+    }
+
+    .share-hint {
+        font-size: 0.75rem;
+    }
+
+    .setting-group {
+        margin-bottom: var(--space-sm);
+    }
+
+    .setting-label {
+        font-size: 0.85rem;
+    }
+
+    .setting-value {
+        font-size: 1rem;
+    }
+
+    .toggle-label {
+        font-size: 0.85rem;
+    }
+
+    .toggle-text {
+        font-size: 0.85rem;
+    }
+
+    .tip-card {
+        padding: var(--space-sm);
+        margin: var(--space-md) 0;
+    }
+
+    .tip-icon {
+        font-size: 1.25rem;
+    }
+
+    .tip-text {
+        font-size: 0.85rem;
+    }
+
+    .footer {
+        padding: var(--space-md);
+    }
+
+    .footer-text {
+        font-size: 0.75rem;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .kbd-hint {
+        font-size: 0.7rem;
+    }
+
+    kbd {
+        padding: 0.15rem 0.35rem;
+        font-size: 0.65rem;
+    }
+
+    .modal-content {
+        padding: var(--space-lg);
+        width: 95%;
+        max-width: 400px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .modal-body p {
+        font-size: 0.9rem;
+    }
+
+    .modal-btn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.85rem;
+    }
+}
+
+/* Extra Small Mobile (max-width: 360px) */
+@media (max-width: 360px) {
+    .logo {
+        font-size: 1.25rem;
+    }
+
+    .timer-wrapper {
+        width: 220px;
+        height: 220px;
+    }
+
+    .timer-display {
+        font-size: 2.25rem;
+    }
+
+    .control-btn {
+        min-width: 80px;
+        max-width: 95px;
+        font-size: 0.7rem;
+        padding: 0.5rem;
+    }
+
+    .badges-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .session-stats {
+        justify-content: space-between;
+    }
+
+    .stat-item {
+        min-width: 60px;
     }
 }
 
