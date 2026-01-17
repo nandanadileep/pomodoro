@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Japanese Pomo • </title>
+    <meta name="description"
+        content="The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. It uses a kitchen timer to break work into intervals, typically 25 minutes in length, separated by short breaks.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌸</text></svg>">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span>
+    </button>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header with Streak -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-group">
+                    <h1 class="logo">
+                        <span class="logo-text">Japanese Pomo</span>
+                    </h1>
+                </div>
+
+                <div class="streak-display">
+                    <div class="streak-flame">🔥</div>
+                    <div class="streak-info">
+                        <span class="streak-count" id="streakCount">0</span>
+                        <span class="streak-label">Day Streak</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Timer Section -->
+        <main class="main-content">
+            <!-- Timer Card -->
+            <div class="timer-card">
+                <!-- Mode Display -->
+                <div class="mode-badge" id="modeBadge">
+                    <span class="mode-icon">⚡</span>
+                    <span class="mode-text">Focus Mode</span>
+                </div>
+
+                <!-- Timer Display -->
+                <div class="timer-wrapper">
+                    <svg class="timer-ring" width="300" height="300" viewBox="0 0 300 300">
+                        <defs>
+                            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#C06C84;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="timer-ring-bg" cx="150" cy="150" r="140" />
+                        <circle class="timer-ring-progress" id="timerRingProgress" cx="150" cy="150" r="140" />
+                    </svg>
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-label" id="timerLabel">minutes left</div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <button class="control-btn start-btn" id="startBtn">
+                        <span class="btn-icon">▶️</span>
+                        <span class="btn-text">Start</span>
+                    </button>
+                    <button class="control-btn pause-btn" id="pauseBtn" disabled>
+                        <span class="btn-icon">⏸️</span>
+                        <span class="btn-text">Pause</span>
+                    </button>
+                    <button class="control-btn reset-btn" id="resetBtn">
+                        <span class="btn-icon">↻</span>
+                        <span class="btn-text">Reset</span>
+                    </button>
+                </div>
+
+                <!-- Session Stats -->
+                <div class="session-stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">🍅</span>
+                        <span class="stat-value" id="sessionCount">0</span>
+                        <span class="stat-label">Today</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-icon">⏱️</span>
+                        <span class="stat-value" id="totalMinutes">0</span>
+                        <span class="stat-label">Mins</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-icon">�</span>
+                        <span class="stat-value" id="badgeCount">0</span>
+                        <span class="stat-label">Badges</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Panel -->
+            <div class="side-panel">
+                <!-- Badges Section -->
+                <div class="panel-section badges-section">
+                    <h3 class="section-title">
+                        <span class="title-icon">🏆</span>
+                        Your Badges
+                    </h3>
+                    <div class="badges-grid" id="badgesGrid">
+                        <div class="badge-item locked">
+                            <span class="badge-emoji">🥷</span>
+                            <span class="badge-name">Ninja Focus</span>
+                            <span class="badge-desc">Complete 1 session</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <span class="badge-emoji">🌸</span>
+                            <span class="badge-name">Sakura Starter</span>
+                            <span class="badge-desc">3-day streak</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <span class="badge-emoji">🗻</span>
+                            <span class="badge-name">Mt. Fuji Climber</span>
+                            <span class="badge-desc">7-day streak</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <span class="badge-emoji">👾</span>
+                            <span class="badge-name">Otaku Overachiever</span>
+                            <span class="badge-desc">Complete 10 sessions</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <span class="badge-emoji">🎌</span>
+                            <span class="badge-name">Shogun of Focus</span>
+                            <span class="badge-desc">30-day streak</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <span class="badge-emoji">⚡</span>
+                            <span class="badge-name">Anime Protagonist</span>
+                            <span class="badge-desc">100 total sessions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share Section -->
+                <div class="panel-section share-section">
+                    <h3 class="section-title">
+                        <span class="title-icon">�</span>
+                        Share on X
+                    </h3>
+                    <button class="share-btn" id="shareBtn">
+                        <span class="share-icon">🚀</span>
+                        <span class="share-text">Tweet Your Progress</span>
+                    </button>
+                    <p class="share-hint">Flex your productivity vibes! ✨</p>
+                </div>
+
+                <!-- Settings Section -->
+                <div class="panel-section settings-section">
+                    <h3 class="section-title">
+                        <span class="title-icon">⚙️</span>
+                        Settings
+                    </h3>
+
+                    <div class="setting-group">
+                        <label class="setting-label">
+                            <span>Focus Time</span>
+                            <span class="setting-value" id="focusValue">25</span> min
+                        </label>
+                        <input type="range" class="setting-slider" id="focusSlider" min="15" max="60" value="25"
+                            step="5">
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">
+                            <span>Break Time</span>
+                            <span class="setting-value" id="breakValue">5</span> min
+                        </label>
+                        <input type="range" class="setting-slider" id="breakSlider" min="3" max="15" value="5" step="1">
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">
+                            <span>Long Break</span>
+                            <span class="setting-value" id="longBreakValue">15</span> min
+                        </label>
+                        <input type="range" class="setting-slider" id="longBreakSlider" min="15" max="30" value="15"
+                            step="5">
+                    </div>
+
+                    <div class="setting-toggles">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="notificationsToggle" checked>
+                            <span class="toggle-switch"></span>
+                            <span class="toggle-text">🔔 Notifications</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Fun Tips Section -->
+        <section class="tips-section">
+            <div class="tip-card" id="tipCard">
+                <span class="tip-icon">💡</span>
+                <p class="tip-text" id="tipText">Don't ghost your tasks like a bad date! 👻</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">
+                Made with 💖 by productivity weebs •
+                <span class="kbd-hint">Pro tip: Press <kbd>Space</kbd> to start/pause, <kbd>R</kbd> to reset</span>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Notification Permission Modal -->
+    <div class="modal" id="notificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Enable Notifications? 🔔</h3>
+            </div>
+            <div class="modal-body">
+                <p>Get notified when your Pomo sessions end - even if you're doom scrolling on another tab! 📱</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="enableNotifications">Let's Go! ✨</button>
+                <button class="modal-btn secondary" id="skipNotifications">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

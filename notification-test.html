@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Test - Japanese Pomo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #FFF5F7;
+        }
+
+        .test-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.15);
+        }
+
+        h1 {
+            color: #FF6B9D;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #FF6B9D 0%, #C06C84 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #FFF0F1;
+            color: #2D1B2E;
+        }
+
+        .success {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .error {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #FF6B9D;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-card">
+        <h1>🔔 Notification Test</h1>
+        <p>Use this page to test if notifications are working properly.</p>
+
+        <div>
+            <button id="requestBtn">Request Notification Permission</button>
+            <button id="testBtn" disabled>Send Test Notification</button>
+        </div>
+
+        <div id="status" class="status" style="display: none;"></div>
+
+        <a href="index.html">← Back to Japanese Pomo</a>
+    </div>
+
+    <script>
+        const requestBtn = document.getElementById('requestBtn');
+        const testBtn = document.getElementById('testBtn');
+        const statusDiv = document.getElementById('status');
+
+        function showStatus(message, type = 'info') {
+            statusDiv.textContent = message;
+            statusDiv.className = 'status ' + type;
+            statusDiv.style.display = 'block';
+        }
+
+        function checkPermission() {
+            if (!('Notification' in window)) {
+                showStatus('❌ Your browser does not support notifications', 'error');
+                return;
+            }
+
+            const permission = Notification.permission;
+
+            if (permission === 'granted') {
+                showStatus('✅ Notification permission: GRANTED', 'success');
+                testBtn.disabled = false;
+                requestBtn.textContent = 'Permission Already Granted ✅';
+                requestBtn.disabled = true;
+            } else if (permission === 'denied') {
+                showStatus('❌ Notification permission: DENIED. Please enable in browser settings.', 'error');
+            } else {
+                showStatus('⚠️ Notification permission: NOT SET. Click the button to request.', 'info');
+            }
+        }
+
+        requestBtn.addEventListener('click', async () => {
+            try {
+                const permission = await Notification.requestPermission();
+
+                if (permission === 'granted') {
+                    showStatus('✅ Permission granted! You can now test notifications.', 'success');
+                    testBtn.disabled = false;
+                    requestBtn.textContent = 'Permission Granted ✅';
+                    requestBtn.disabled = true;
+
+                    // Send a test notification immediately
+                    new Notification('Success! 🎉', {
+                        body: 'Notifications are now enabled for Japanese Pomo!',
+                        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">🌸</text></svg>'
+                    });
+                } else if (permission === 'denied') {
+                    showStatus('❌ Permission denied. Please enable notifications in your browser settings.', 'error');
+                } else {
+                    showStatus('⚠️ Permission dismissed. Please try again.', 'error');
+                }
+            } catch (error) {
+                showStatus('❌ Error requesting permission: ' + error.message, 'error');
+            }
+        });
+
+        testBtn.addEventListener('click', () => {
+            if (Notification.permission === 'granted') {
+                const notification = new Notification('Test Notification 🔔', {
+                    body: 'This is what your Pomodoro notifications will look like!',
+                    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">🌸</text></svg>',
+                    tag: 'test-notification',
+                    requireInteraction: false
+                });
+
+                notification.onclick = () => {
+                    window.focus();
+                    notification.close();
+                };
+
+                setTimeout(() => notification.close(), 5000);
+
+                showStatus('✅ Test notification sent! Check your notifications.', 'success');
+            } else {
+                showStatus('❌ Permission not granted yet. Please request permission first.', 'error');
+            }
+        });
+
+        // Check on load
+        checkPermission();
+    </script>
+</body>
+
+</html>
