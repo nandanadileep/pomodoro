@@ -643,24 +643,38 @@ function showNotification(title, body) {
 function playBeep() {
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
 
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
+        // Create a series of beeps (3 beeps)
+        const beepTimes = [0, 0.3, 0.6]; // Three beeps with 300ms gap
 
-        // Create a pleasant beep sound
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        beepTimes.forEach((startTime) => {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
 
-        // Volume envelope
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
 
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.5);
+            // Louder and more pleasant beep sound
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(880, audioContext.currentTime + startTime); // A5 note
+
+            // Louder volume envelope
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime + startTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + startTime + 0.05); // Loud!
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + startTime + 0.25);
+
+            oscillator.start(audioContext.currentTime + startTime);
+            oscillator.stop(audioContext.currentTime + startTime + 0.25);
+        });
     } catch (error) {
         console.error('Beep sound error:', error);
+        // Fallback: try using a simple alert sound
+        try {
+            const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE');
+            audio.play();
+        } catch (e) {
+            console.error('Fallback audio failed:', e);
+        }
     }
 }
 
