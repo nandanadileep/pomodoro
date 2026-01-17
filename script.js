@@ -640,22 +640,37 @@ function showNotification(title, body) {
     if (!AppState.settings.notifications) return;
 
     if ('Notification' in window && Notification.permission === 'granted') {
-        const notification = new Notification(title, {
-            body: body,
-            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">🌸</text></svg>',
-            badge: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF6B9D"/></svg>',
-            tag: 'japanese-pomo',
-            requireInteraction: false,
-            vibrate: [200, 100, 200],
-            silent: false
-        });
+        try {
+            const notification = new Notification(title, {
+                body: body,
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">�</text></svg>',
+                badge: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF6B9D"/></svg>',
+                tag: 'japanese-pomo-' + Date.now(), // Unique tag so multiple notifications show
+                requireInteraction: true, // Keep notification visible until user interacts
+                silent: false, // Allow system sound
+                renotify: true // Show even if similar notification exists
+            });
 
-        setTimeout(() => notification.close(), 5000);
+            // Auto-close after 10 seconds if user doesn't interact
+            setTimeout(() => {
+                try {
+                    notification.close();
+                } catch (e) {
+                    // Notification already closed
+                }
+            }, 10000);
 
-        notification.onclick = () => {
-            window.focus();
-            notification.close();
-        };
+            notification.onclick = () => {
+                window.focus();
+                notification.close();
+            };
+
+            console.log('✅ Notification sent:', title);
+        } catch (error) {
+            console.error('❌ Notification error:', error);
+        }
+    } else {
+        console.warn('⚠️ Notifications not available or not permitted');
     }
 }
 
