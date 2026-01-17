@@ -685,6 +685,8 @@ body {
     cursor: not-allowed;
     transform: none !important;
     box-shadow: none !important;
+    display: none;
+    /* Hide disabled buttons on mobile */
 }
 
 .btn-icon {
@@ -1332,13 +1334,13 @@ kbd {
     }
 
     .timer-wrapper {
-        width: 240px;
-        height: 240px;
-        margin-bottom: var(--space-md);
+        width: 260px;
+        height: 260px;
+        margin-bottom: var(--space-lg);
     }
 
     .timer-display {
-        font-size: 2.5rem;
+        font-size: 3rem;
     }
 
     .timer-label {
@@ -1347,16 +1349,22 @@ kbd {
     }
 
     .controls {
-        gap: var(--space-xs);
+        gap: var(--space-sm);
+        justify-content: center;
     }
 
     .control-btn {
-        flex: 1;
-        min-width: 90px;
-        max-width: 110px;
-        padding: var(--space-sm);
-        font-size: 0.75rem;
-        border-radius: var(--radius-sm);
+        flex: 0 0 auto;
+        min-width: 100px;
+        max-width: 130px;
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+        border-radius: var(--radius-md);
+    }
+
+    .control-btn:disabled {
+        display: none;
+        /* Hide disabled buttons to prevent overlap */
     }
 
     .btn-icon {
@@ -1364,9 +1372,10 @@ kbd {
     }
 
     .session-stats {
-        padding: var(--space-sm);
-        flex-wrap: wrap;
-        gap: var(--space-xs);
+        padding: var(--space-md);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-md);
     }
 
     .stat-item {
