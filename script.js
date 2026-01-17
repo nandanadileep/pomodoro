@@ -218,7 +218,9 @@ function setupCrossTabSync() {
                 document.body.classList.add('timer-active');
                 // Make sure we're ticking too
                 if (!AppState.intervalId) {
-                    AppState.intervalId = setInterval(tick, 1000);
+                    AppState.intervalId = setInterval(() => {
+                        tick();
+                    }, 1000);
                 }
             } else {
                 document.body.classList.remove('timer-active');
