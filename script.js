@@ -10,6 +10,7 @@ const AppState = {
     isRunning: false,
     isPaused: false,
     intervalId: null,
+    lastTickTime: null, // For accurate timing
 
     // Settings
     settings: {
@@ -29,6 +30,9 @@ const AppState = {
         badges: []
     }
 };
+
+// Cross-tab synchronization
+const syncChannel = new BroadcastChannel('pomodoro-sync');
 
 // ==================== DOM ELEMENTS ====================
 const DOM = {
@@ -181,7 +185,69 @@ function initializeApp() {
     // Update streak
     updateStreak();
 
+    // Setup cross-tab sync
+    setupCrossTabSync();
+
     console.log('✨ App ready! Let\'s get productive!');
+}
+
+// ==================== CROSS-TAB SYNCHRONIZATION ====================
+function setupCrossTabSync() {
+    // Listen for messages from other tabs
+    syncChannel.addEventListener('message', (event) => {
+        const { type, data } = event.data;
+
+        if (type === 'TIMER_UPDATE') {
+            // Update timer from other tab
+            AppState.mode = data.mode;
+            AppState.timeLeft = data.timeLeft;
+            AppState.totalTime = data.totalTime;
+            AppState.isRunning = data.isRunning;
+            AppState.isPaused = data.isPaused;
+
+            // Update UI
+            updateTimerDisplay();
+            updateProgressRing();
+            updateDocumentTitle();
+
+            // Update button states
+            DOM.startBtn.disabled = data.isRunning;
+            DOM.pauseBtn.disabled = !data.isRunning;
+
+            if (data.isRunning) {
+                document.body.classList.add('timer-active');
+            } else {
+                document.body.classList.remove('timer-active');
+            }
+        } else if (type === 'STATE_UPDATE') {
+            // Full state sync
+            AppState.stats = data.stats;
+            updateStatsDisplay();
+            renderBadges();
+        }
+    });
+}
+
+function broadcastTimerState() {
+    syncChannel.postMessage({
+        type: 'TIMER_UPDATE',
+        data: {
+            mode: AppState.mode,
+            timeLeft: AppState.timeLeft,
+            totalTime: AppState.totalTime,
+            isRunning: AppState.isRunning,
+            isPaused: AppState.isPaused
+        }
+    });
+}
+
+function broadcastStateUpdate() {
+    syncChannel.postMessage({
+        type: 'STATE_UPDATE',
+        data: {
+            stats: AppState.stats
+        }
+    });
 }
 
 // ==================== SAKURA PETALS ANIMATION ====================
@@ -234,6 +300,9 @@ function startTimer() {
 
     // Start interval
     AppState.intervalId = setInterval(tick, 1000);
+
+    // Broadcast to other tabs
+    broadcastTimerState();
 }
 
 function pauseTimer() {
@@ -249,6 +318,9 @@ function pauseTimer() {
 
     // Clear interval
     clearInterval(AppState.intervalId);
+
+    // Broadcast to other tabs
+    broadcastTimerState();
 }
 
 function resetTimer() {
@@ -268,6 +340,9 @@ function resetTimer() {
     // Update UI
     updateTimerDisplay();
     updateProgressRing();
+
+    // Broadcast to other tabs
+    broadcastTimerState();
 }
 
 function tick() {
@@ -284,6 +359,9 @@ function tick() {
 
     // Update document title
     updateDocumentTitle();
+
+    // Broadcast timer state every tick
+    broadcastTimerState();
 }
 
 function completeTimer() {
@@ -316,6 +394,9 @@ function handleFocusComplete() {
 
     // Check badges
     checkAndUnlockBadges();
+
+    // Broadcast state update
+    broadcastStateUpdate();
 
     // Show notification
     const message = getRandomMessage('sessionComplete');
