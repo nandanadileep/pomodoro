@@ -661,11 +661,12 @@ function showNotification(title, body) {
 
 // ==================== BEEP SOUND ====================
 function playBeep() {
+    console.log('🔊 PLAYING BEEP SOUND!');
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-        // Create a series of beeps (3 beeps)
-        const beepTimes = [0, 0.3, 0.6]; // Three beeps with 300ms gap
+        // Create 5 LOUD beeps
+        const beepTimes = [0, 0.4, 0.8, 1.2, 1.6];
 
         beepTimes.forEach((startTime) => {
             const oscillator = audioContext.createOscillator();
@@ -674,27 +675,24 @@ function playBeep() {
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
 
-            // Louder and more pleasant beep sound
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(880, audioContext.currentTime + startTime); // A5 note
+            // VERY LOUD harsh beep - impossible to miss!
+            oscillator.type = 'square'; // Harsh buzzer sound
+            oscillator.frequency.setValueAtTime(880, audioContext.currentTime + startTime);
 
-            // Louder volume envelope
+            // MAX VOLUME
             gainNode.gain.setValueAtTime(0, audioContext.currentTime + startTime);
-            gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + startTime + 0.05); // Loud!
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + startTime + 0.25);
+            gainNode.gain.linearRampToValueAtTime(0.9, audioContext.currentTime + startTime + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + startTime + 0.35);
 
             oscillator.start(audioContext.currentTime + startTime);
-            oscillator.stop(audioContext.currentTime + startTime + 0.25);
+            oscillator.stop(audioContext.currentTime + startTime + 0.35);
         });
+
+        console.log('✅ Beep played successfully!');
     } catch (error) {
-        console.error('Beep sound error:', error);
-        // Fallback: try using a simple alert sound
-        try {
-            const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE');
-            audio.play();
-        } catch (e) {
-            console.error('Fallback audio failed:', e);
-        }
+        console.error('❌ Beep error:', error);
+        // Fallback alert
+        alert('⏰ TIMER COMPLETE!');
     }
 }
 
