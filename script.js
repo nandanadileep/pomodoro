@@ -371,14 +371,12 @@ function tick() {
     // Update display
     updateTimerDisplay();
     updateProgressRing();
+    updateDocumentTitle(); // Update tab title every second
 
     // Check if timer completed
     if (AppState.timeLeft <= 0) {
         completeTimer();
     }
-
-    // Update document title
-    updateDocumentTitle();
 
     // Broadcast timer state every tick
     broadcastTimerState();
